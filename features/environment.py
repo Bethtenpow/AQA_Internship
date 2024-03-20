@@ -1,9 +1,10 @@
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.support.wait import WebDriverWait
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager.chrome import ChromeDriverManager
-from app.application import Application
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.common.by import By
+from time import sleep
+from app.cap_application import Application
 
 def browser_init(context):
     """
@@ -12,6 +13,7 @@ def browser_init(context):
     driver_path = ChromeDriverManager().install()
     service = Service(driver_path)
     context.driver = webdriver.Chrome(service=service)
+
 
     context.driver.maximize_window()
 
@@ -23,6 +25,11 @@ def browser_init(context):
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
     browser_init(context)
+
+    context.driver.get('https://soft.reelly.io/sign-in')
+    context.driver.find_element(By.ID, 'email-2').send_keys("your_email")
+    context.driver.find_element(By.ID, 'field').send_keys("your_password")
+    context.driver.find_element(By.CSS_SELECTOR, ".login-button").click()
 
 
 def before_step(context, step):
