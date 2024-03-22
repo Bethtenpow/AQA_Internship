@@ -3,7 +3,7 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 
-from CAP_pages_internship.cap_base_page import Page
+from CAP_pages_internship.base_page import Page
 
 
 class LoginPage(Page):

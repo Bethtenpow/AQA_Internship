@@ -1,4 +1,4 @@
-from CAP_pages_internship.cap_base_page import Page
+from CAP_pages_internship.base_page import Page
 from selenium.webdriver.common.by import By
 
 
