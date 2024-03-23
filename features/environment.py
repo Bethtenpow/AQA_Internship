@@ -4,7 +4,7 @@ from webdriver_manager.chrome import ChromeDriverManager
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.common.by import By
 from time import sleep
-from app.cap_application import Application
+from app.application import Application
 
 def browser_init(context):
     """

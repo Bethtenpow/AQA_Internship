@@ -1,23 +1,26 @@
 from selenium.webdriver.common.by import By
-
-from CAP_pages_internship.base_page import Page
+from time import sleep
+from pages.base_page import Page
 
 
 class ConnectTheCompanyPage(Page):
-    YOUR_COUNTRY = (By.ID, 'Your-country')
-    COMPANY_NAME = (By.ID, 'Company-name-2')
-    POSITION = (By.ID, 'Position')
-    YOUR_NAME_TEST = (By.ID, 'Director-name')
-    YOUR_PHONE_TEST = (By.ID, 'Director-phone')
-    AMOUNT_AGENTS_COMPANY = (By.ID, 'Amount-of-agents-in-company')
-    EMAIL_TEST = (By.ID, 'Email-2')
-    SEND_REQUEST_BTN = (By.XPATH, "//input[@class='purchase-access']")
-    BUY_SUBSCRIPTION_BTN = (By.CSS_SELECTOR, "[class ='step-button']")
+    YOUR_COUNTRY = (By.XPATH, "//*[@name='Your-country']")
+    COMPANY_NAME = (By.XPATH, "//*[@data-name='Company Name 2']")
+    POSITION = (By.XPATH, "//*[@data-name='Position.']")
+    YOUR_NAME_TEST = (By.XPATH, "//*[@data-name='Director name']")
+    YOUR_PHONE_TEST = (By.XPATH, "//*[@data-name='Director phone']")
+    AMOUNT_AGENTS_COMPANY = (By.XPATH, "//*[@data-name='Amount of agents in company']")
+    EMAIL_TEST = (By.XPATH, "//*[@data-name='Email 2']")
+    SEND_REQUEST_BTN = (By.XPATH, "//*[@value='Send request']")
+    BUY_SUBSCRIPTION_BTN = (By.CSS_SELECTOR, "[class*='step-button']")
 
     def verify_connect_company_page_opened(self):
         self.verify_url('https://soft.reely.io/book-presentation')
 
     def test_information(self):
+        sleep(4)
+        self.wait_for_element_visible(*self.YOUR_COUNTRY)
+        self.find_element(*self.YOUR_COUNTRY)
         self.input_text('United States', *self.YOUR_COUNTRY)
         self.input_text('TEST', *self.COMPANY_NAME)
         self.input_text('President', *self.POSITION)

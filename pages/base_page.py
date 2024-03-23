@@ -8,15 +8,12 @@ class Page:
         self.driver = driver
         self.wait = WebDriverWait(self.driver, 10)
 
-    def wait_element_visible(self, by, value, timeout=10):
-        try:
-            element = WebDriverWait(self.driver, timeout).until(
-                EC.visibility_of_element_located((by, value))
-             )
-            return element
-        except Exception as e:
-            print(f"Element with {by}={value} not visible within {timeout} seconds. Error: {e}")
-            return None
+    def wait_for_element_visible(self, *locator):
+        element = self.wait.until(
+            EC.visibility_of_element_located(locator),
+            message=f'Element by {locator} not visible'
+        )
+        return element
 
     def open(self, url):
         self.driver.get(url)
@@ -33,10 +30,16 @@ class Page:
     def input_text(self, text, *locator):
         self.driver.find_element(*locator).send_keys(text)
 
-    def switch_to_new_window(self):
-        self.wait.until(EC.new_window_is_opened)
+    def switch_to_new_tab(self):
+        self.wait.until(EC.new_window_is_opened(self.driver.window_handles))
         all_windows = self.driver.window_handles
         self.driver.switch_to.window(all_windows[1])
+
+#original window is 0, new window is 1,
+# and every subsequent window
+#is a new window with the next number (ei, 2,3,4, etc).
+
+
 
     def switch_to_window_by_id(self, window_id):
         self.driver.switch_to.window(window_id)
