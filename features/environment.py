@@ -7,24 +7,26 @@ from selenium.webdriver.common.by import By
 from app.application import Application
 from selenium.webdriver.chrome.options import Options
 
+# Run Behave Tests with Allure Results
+# behave -f allure_behave.formatter:AllureFormatter -o test_results/ features/tests/main_page_ui.feature
+
 
 def browser_init(context):
     """
     :param context: Behave context
     """
 
-#Chrome
-    # driver_path = ChromeDriverManager().install()
-    # service = Service(driver_path)
-    # context.driver = webdriver.Chrome(service=service)
+# Chrome
+    driver_path = ChromeDriverManager().install()
+    service = Service(driver_path)
+    context.driver = webdriver.Chrome(service=service)
 
-
-#Firefox
+# Firefox
     # driver_path = GeckoDriverManager().install()
     # service = Service(driver_path)
     # context.driver = webdriver.Firefox(service=service)
 
-#Headless Chrome
+# Headless Chrome
     # options = webdriver.ChromeOptions()
     # options.add_argument('headless')
     # options.add_argument('--window-size=1920x1080')
@@ -34,32 +36,32 @@ def browser_init(context):
     #     service=service
     # )
 
-    # context.driver.maximize_window()
-
-    # context.driver.implicitly_wait(4)
-    # context.wait = WebDriverWait(context.driver, 15)
-    # context.app = Application(context.driver)
-
-    ##BROWSERSTACK##
-    bs_user = 'elizabethtenpow_F7SmpD'
-    bs_key = 'k7RLEpXzytZZCiPze3sV'
-    url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
-
-    options = Options()
-    bstack_options = {
-        'os': 'Windows',
-        'osVersion': '10',
-        'browserName': 'Firefox',
-        'sessionName': 'User clicks on “Connect the company” button and can use the form to register a new agency'
-    }
-    options.set_capability('bstack:options', bstack_options)
-    context.driver = webdriver.Remote(command_executor=url, options=options)
-
     context.driver.maximize_window()
 
     context.driver.implicitly_wait(4)
     context.wait = WebDriverWait(context.driver, 15)
     context.app = Application(context.driver)
+
+# BROWSERSTACK #
+    # bs_user = 'elizabethtenpow_F7SmpD'
+    # bs_key = 'k7RLEpXzytZZCiPze3sV'
+    # url = f'http://{bs_user}:{bs_key}@hub-cloud.browserstack.com/wd/hub'
+    #
+    # options = Options()
+    # bstack_options = {
+    #     'os': 'Windows',
+    #     'osVersion': '10',
+    #     'browserName': 'Firefox',
+    #     'sessionName': 'User clicks on “Connect the company” button and can use the form to register a new agency'
+    # }
+    # options.set_capability('bstack:options', bstack_options)
+    # context.driver = webdriver.Remote(command_executor=url, options=options)
+    #
+    # context.driver.maximize_window()
+    #
+    # context.driver.implicitly_wait(4)
+    # context.wait = WebDriverWait(context.driver, 15)
+    # context.app = Application(context.driver)
 
 def before_scenario(context, scenario):
     print('\nStarted scenario: ', scenario.name)
